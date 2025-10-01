@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destiny Church - Exodus Experience 2025: Year of Unstoppable Expansion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 50%, #7986cb 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a237e;
+        }
+
+        .logo::before {
+            content: "✝️";
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #1a237e;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #3949ab;
+        }
+
+        .main-content {
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .theme-banner {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .theme-banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .theme-banner p {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .hero-section .verse {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a237e;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .services-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .schedule-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .schedule-title {
+            text-align: center;
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .schedule-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border-left: 4px solid #ffd700;
+        }
+
+        .schedule-day {
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .schedule-time {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #ffed4e;
+        }
+
+        .schedule-event {
+            opacity: 0.9;
+        }
+
+        .ministries-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 2rem;
+        }
+
+        .ministries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .ministry-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .ministry-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .contact-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: #ffd700;
+        }
+
+        .exodus-highlight {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .exodus-highlight h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .prayer-request {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .prayer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .prayer-form input,
+        .prayer-form textarea {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .prayer-form button {
+            background: #ffd700;
+            color: #1a237e;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .prayer-form button:hover {
+            background: #ffed4e;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .theme-banner h2 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Destiny Church</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="main.html">Main</a></li>
+                <li><a href="ytdl.html">YouTube Downloader</a></li>
+                <li><a href="Destiny.html">Destiny Church</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="main-content">
+            <section class="hero-section">
+                <h1>Welcome to Destiny Church</h1>
+                
+                <div class="theme-banner">
+                    <h2>🌟 EXODUS EXPERIENCE 2025 🌟</h2>
+                    <p>"The Year of Unstoppable Expansion"</p>
+                </div>
+
+                <div class="verse">
+                    "And I will bring you to the land I swore with uplifted hand to give to Abraham, to Isaac and to Jacob. I will give it to you as a possession. I am the LORD." - Exodus 6:8
+                </div>
+
+                <div class="cta-buttons">
+                    <a href="#services" class="cta-button">Join Us Sunday</a>
+                    <a href="#prayer" class="cta-button">Prayer Request</a>
+                    <a href="#contact" class="cta-button">Visit Us</a>
+                </div>
+            </section>
+
+            <div class="exodus-highlight">
+                <h3>🚀 Exodus Experience 2025: Unstoppable Expansion</h3>
+                <p>This year, we're stepping into God's promises like never before! Join us as we experience supernatural growth, breakthrough, and expansion in every area of our lives. Just as God led the Israelites out of bondage into the Promised Land, He's leading us into our season of unprecedented blessing and influence.</p>
+            </div>
+
+            <section class="services-section" id="services">
+                <div class="service-card">
+                    <div class="service-icon">🙏</div>
+                    <h3>Sunday Worship</h3>
+                    <p>Experience powerful worship, life-changing messages, and the presence of God every Sunday. Join our Exodus Experience services as we journey together into God's promises.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📖</div>
+                    <h3>Bible Study</h3>
+                    <p>Dive deep into God's Word with our Exodus-themed Bible studies. Discover the principles of breakthrough and expansion that will transform your life.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Small Groups</h3>
+                    <p>Connect with others in intimate fellowship groups where we support each other's journey of faith and expansion in 2025.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎵</div>
+                    <h3>Worship Ministry</h3>
+                    <p>Join our worship team as we lead the congregation into God's presence with songs of victory and breakthrough.</p>
+                </div>
+            </section>
+
+            <section class="schedule-section">
+                <h2 class="schedule-title">📅 Weekly Schedule - Exodus Experience 2025</h2>
+                <div class="schedule-grid">
+                    <div class="schedule-item">
+                        <div class="schedule-day">Sunday</div>
+                        <div class="schedule-time">9:00 AM</div>
+                        <div class="schedule-event">Exodus Experience Worship Service</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-day">Sunday</div>
+                        <div class="schedule-time">11:30 AM</div>
+                        <div class="schedule-event">Second Service & Children's Church</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-day">Wednesday</div>
+                        <div class="schedule-time">7:00 PM</div>
+                        <div class="schedule-event">Midweek Bible Study - "Principles of Expansion"</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-day">Friday</div>
+                        <div class="schedule-time">7:30 PM</div>
+                        <div class="schedule-event">Youth Exodus - Young Adults Ministry</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-day">Saturday</div>
+                        <div class="schedule-time">10:00 AM</div>
+                        <div class="schedule-event">Men's Breakthrough Fellowship</div>
+                    </div>
+                    <div class="schedule-item">
+                        <div class="schedule-day">Saturday</div>
+                        <div class="schedule-time">2:00 PM</div>
+                        <div class="schedule-event">Women of Destiny - Expansion Conference</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="ministries-section">
+                <h2 class="section-title">🌟 Our Ministries - Expanding God's Kingdom</h2>
+                <div class="ministries-grid">
+                    <div class="ministry-card">
+                        <h4>👶 Children's Ministry</h4>
+                        <p>Raising the next generation for God's kingdom expansion</p>
+                    </div>
+                    <div class="ministry-card">
+                        <h4>🎓 Youth Ministry</h4>
+                        <p>Empowering young people for their Exodus experience</p>
+                    </div>
+                    <div class="ministry-card">
+                        <h4>👨‍👩‍👧‍👦 Family Ministry</h4>
+                        <p>Strengthening families for unstoppable growth</p>
+                    </div>
+                    <div class="ministry-card">
+                        <h4>🤝 Outreach Ministry</h4>
+                        <p>Expanding our reach to the community</p>
+                    </div>
+                    <div class="ministry-card">
+                        <h4>💒 Marriage Ministry</h4>
+                        <p>Building strong marriages that expand God's love</p>
+                    </div>
+                    <div class="ministry-card">
+                        <h4>🎼 Music Ministry</h4>
+                        <p>Leading worship for breakthrough and expansion</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="prayer-request" id="prayer">
+                <h2 class="section-title">🙏 Prayer Requests - Breakthrough & Expansion</h2>
+                <p style="text-align: center; margin-bottom: 2rem;">Submit your prayer request and let our prayer team intercede for your breakthrough in 2025!</p>
+                <form class="prayer-form" onsubmit="submitPrayer(event)">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="text" placeholder="Prayer Request Title" required>
+                    <textarea rows="5" placeholder="Share your prayer request for breakthrough and expansion..." required></textarea>
+                    <button type="submit">Submit Prayer Request</button>
+                </form>
+            </section>
+
+            <section class="contact-section" id="contact">
+                <h2 class="section-title">📍 Visit Destiny Church</h2>
+                <p>Join us for the Exodus Experience 2025 - Your year of unstoppable expansion starts here!</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <strong>Address:</strong><br>
+                            123 Faith Avenue<br>
+                            Destiny City, DC 12345
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <strong>Phone:</strong><br>
+                            (555) 123-DESTINY<br>
+                            (555) 123-3378
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <div>
+                            <strong>Email:</strong><br>
+                            info@destinychurch.org<br>
+                            pastor@destinychurch.org
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🌐</span>
+                        <div>
+                            <strong>Follow Us:</strong><br>
+                            @DestinyChurchExodus<br>
+                            Facebook | Instagram | YouTube
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                    <h4 style="color: #ffd700; margin-bottom: 1rem;">🎯 Our 2025 Vision</h4>
+                    <p>"To see every member experience their personal Exodus - breaking free from limitations and stepping into God's promises of expansion, influence, and supernatural breakthrough in every area of life."</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        function submitPrayer(event) {
+            event.preventDefault();
+            alert('Thank you for your prayer request! Our prayer team will intercede for your breakthrough and expansion. God is about to do something amazing in your life during this Exodus Experience 2025!');
+            event.target.reset();
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate service cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all cards
+            document.querySelectorAll('.service-card, .ministry-card, .schedule-item').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
