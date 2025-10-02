@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Downloader Pro - Mr Ntando Ofc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #4f46e5;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f1f5f9;
+            --card-bg: #1e293b;
+            --text: #e2e8f0;
+            --text-light: #94a3b8;
+            --bg: #0f172a;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --youtube: #FF0000;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gold: #ffd700;
+            --premium: linear-gradient(135deg, #ffd700, #ffed4e);
+        }
+
+        [data-theme="light"] {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #4f46e5;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #f8fafc;
+            --light: #1e293b;
+            --dark: #f1f5f9;
+            --darker: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            text-decoration: none;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 1.5rem;
+            margin: 0 auto;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary);
+            color: var(--text);
+            border-radius: 50px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .theme-toggle i {
+            font-size: 0.9rem;
+        }
+
+        /* Premium Status Bar */
+        .status-bar {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 10px 15px;
+            z-index: 99;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+        }
+
+        .status-bar.premium {
+            background: var(--premium);
+            color: var(--dark);
+            border-color: var(--gold);
+        }
+
+        .downloads-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .premium-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .premium-badge i {
+            color: var(--gold);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-top: 4rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--youtube), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Pricing Cards */
+        .pricing-section {
+            margin-bottom: 3rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(74, 107, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 237, 78, 0.05));
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--premium);
+            color: var(--dark);
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-duration {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-features i {
+            color: var(--success);
+            width: 16px;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Voucher Section */
+        .voucher-section {
+            background: var(--card-bg);
+            border: 1px solid rgba(74, 107, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .voucher-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .voucher-code {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(74, 107, 255, 0.3);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .redeem-btn {
+            padding: 12px 20px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+            background: var(--card-bg);
+            border: 2px solid var(--error);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--error);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .voucher-generator {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .voucher-generator input,
+        .voucher-generator select {
+            padding: 10px;
+            border: 1px solid rgba(74, 107, 255, 0.3);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .generate-btn {
+            padding: 10px 20px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .generated-vouchers {
+            margin-top: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .voucher-item {
+            background: var(--bg);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            padding: 5px 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid rgba(74, 107, 255, 0.2);
+            border-radius: 12px;
+            background: var(--card-bg);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .search-button {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+        
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+        
+        .search-button:active {
+            transform: translateY(0);
+        }
+        
+        /* Results Section */
+        .results-container {
+            display: none;
+            margin-top: 2rem;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .results-count {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .video-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(74, 107, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.15);
+            border-color: var(--primary);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .video-info {
+            padding: 15px;
+        }
+        
+        .video-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .video-author {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .video-author i {
+            color: var(--primary);
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .download-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .download-mp3 {
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+        }
+        
+        .download-mp4 {
+            background: linear-gradient(135deg, var(--youtube), #cc0000);
+            color: white;
+        }
+
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .download-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(37, 99, 235, 0.2);
+            border-left: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Error State */
+        .error-message {
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .payment-info {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .ecocash-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(74, 107, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+            background: var(--gradient);
+            color: white;
+        }
+
+        .copyright {
+            color: var(--text-light);
+            opacity: 0.8;
+            font-size: 0.8rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-button {
+                padding: 12px;
+                justify-content: center;
+            }
+            
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+
+            .status-bar {
+                top: 50px;
+                right: 10px;
+                min-width: 150px;
+                padding: 8px 12px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding-top: 6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span>Dark Mode</span>
+    </div>
+
+    <div class="status-bar" id="statusBar">
+        <div class="downloads-left" id="downloadsLeft">
+            <i class="fas fa-download"></i>
+            <span>5 downloads left</span>
+        </div>
+    </div>
+
+    <button class="admin-toggle" id="adminToggle" title="Admin Panel">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <div class="container">
+        <!-- Admin Panel -->
+        <div class="admin-panel" id="adminPanel">
+            <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
+            <div class="voucher-generator">
+                <input type="text" id="voucherPrefix" placeholder="Voucher Prefix" value="ELITE">
+                <select id="voucherType">
+                    <option value="1day">1 Day Unlimited</option>
+                    <option value="3day">3 Days Unlimited</option>
+                    <option value="unlimited">Permanent Unlimited</option>
+                </select>
+                <input type="number" id="voucherCount" placeholder="Count" value="1" min="1" max="50">
+                <button class="generate-btn" id="generateVouchers">Generate</button>
+            </div>
+            <div class="generated-vouchers" id="generatedVouchers"></div>
+        </div>
+
+        <header>
+            <h1><i class="fab fa-youtube"></i> YouTube Downloader Pro</h1>
+            <p class="subtitle">Download YouTube videos and audio in high quality. Fast, secure, and premium features available.</p>
+        </header>
+
+        <!-- Pricing Section -->
+        <div class="pricing-section">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Choose Your Plan</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="plan-name">Free</div>
+                    <div class="plan-price">$0</div>
+                    <div class="plan-duration">Forever</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> 5 downloads per day</li>
+                        <li><i class="fas fa-check"></i> Standard quality</li>
+                        <li><i class="fas fa-check"></i> MP3 & MP4 formats</li>
+                        <li><i class="fas fa-times" style="color: var(--error)"></i> No ads removal</li>
+                    </ul>
+                    <button class="buy-btn" disabled>Current Plan</button>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="plan-name">Daily Pro</div>
+                    <div class="plan-price">$1</div>
+                    <div class="plan-duration">24 hours</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Unlimited downloads</li>
+                        <li><i class="fas fa-check"></i> High quality</li>
+                        <li><i class="fas fa-check"></i> All formats</li>
+                        <li><i class="fas fa-check"></i> No ads</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                    </ul>
+                    <button class="buy-btn" onclick="openPaymentModal('daily')">Buy Now</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="plan-name">3-Day Pro</div>
+                    <div class="plan-price">$2</div>
+                    <div class="plan-duration">3 days</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Unlimited downloads</li>
+                        <li><i class="fas fa-check"></i> Ultra high quality</li>
+                        <li><i class="fas fa-check"></i> All formats</li>
+                        <li><i class="fas fa-check"></i> No ads</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> Batch downloads</li>
+                    </ul>
+                    <button class="buy-btn" onclick="openPaymentModal('3day')">Buy Now</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voucher Section -->
+        <div class="voucher-section">
+            <h3><i class="fas fa-ticket-alt"></i> Have a Voucher Code?</h3>
+            <p>Redeem your voucher code to unlock premium features</p>
+            <div class="voucher-input">
+                <input type="text" class="voucher-code" id="voucherCode" placeholder="Enter voucher code">
+                <button class="redeem-btn" id="redeemBtn">Redeem</button>
+            </div>
+        </div>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for YouTube videos..." autocomplete="off">
+                <button class="search-button" id="searchButton">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Searching for videos...</p>
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="errorText">An error occurred while searching. Please try again.</span>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i>
+            <span id="successText">Success!</span>
+        </div>
+        
+        <div class="results-container" id="resultsContainer">
+            <div class="results-header">
+                <h2>Search Results</h2>
+                <div class="results-count" id="resultsCount">0 videos found</div>
+            </div>
+            <div class="videos-grid" id="videosGrid">
+                <!-- Videos will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <footer>
+            <div class="social-links">
+                <a href="https://www.facebook.com/people/Elite-Pro/61567898664873/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://whatsapp.com/channel/0029VaXaqHII1rcmdDBBsd3g" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://youtube.com/@eliteprotechs" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/elitepro_md/" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+            <p class="copyright">© 2025 EliteProTech YouTube Downloader Pro. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePaymentModal()">×</button>
+            <h3><i class="fas fa-credit-card"></i> Payment Information</h3>
+            <div class="payment-info">
+                <p>Send payment via EcoCash to:</p>
+                <div class="ecocash-number">263777124998</div>
+                <p id="paymentAmount">Amount: $1 USD</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                    After payment, you'll receive instant access to premium features.
+                    Contact us on WhatsApp with payment confirmation for immediate activation.
+                </p>
+            </div>
+            <button class="buy-btn" onclick="confirmPayment()">I've Made Payment</button>
+        </div>
+    </div>
+
+    <script>
+        // User Management System
+        class UserManager {
+            constructor() {
+                this.loadUserData();
+                this.updateUI();
+            }
+
+            loadUserData() {
+                const userData = localStorage.getItem('ytd_user_data');
+                if (userData) {
+                    this.user = JSON.parse(userData);
+                } else {
+                    this.user = {
+                        downloadsToday: 0,
+                        lastDownloadDate: new Date().toDateString(),
+                        isPremium: false,
+                        premiumExpiry: null,
+                        premiumType: null
+                    };
+                    this.saveUserData();
+                }
+
+                                // Reset daily downloads if it's a new day
+                if (this.user.lastDownloadDate !== new Date().toDateString()) {
+                    this.user.downloadsToday = 0;
+                    this.user.lastDownloadDate = new Date().toDateString();
+                    this.saveUserData();
+                }
+
+                // Check if premium has expired
+                if (this.user.isPremium && this.user.premiumExpiry) {
+                    if (new Date() > new Date(this.user.premiumExpiry)) {
+                        this.user.isPremium = false;
+                        this.user.premiumType = null;
+                        this.user.premiumExpiry = null;
+                        this.saveUserData();
+                    }
+                }
+            }
+
+            saveUserData() {
+                localStorage.setItem('ytd_user_data', JSON.stringify(this.user));
+            }
+
+            canDownload() {
+                if (this.user.isPremium) return true;
+                return this.user.downloadsToday < 5;
+            }
+
+            recordDownload() {
+                if (!this.user.isPremium) {
+                    this.user.downloadsToday++;
+                    this.saveUserData();
+                }
+                this.updateUI();
+            }
+
+            activatePremium(type) {
+                this.user.isPremium = true;
+                this.user.premiumType = type;
+                
+                const now = new Date();
+                if (type === '1day') {
+                    now.setDate(now.getDate() + 1);
+                } else if (type === '3day') {
+                    now.setDate(now.getDate() + 3);
+                } else if (type === 'unlimited') {
+                    now.setFullYear(now.getFullYear() + 10); // 10 years
+                }
+                
+                this.user.premiumExpiry = now.toISOString();
+                this.saveUserData();
+                this.updateUI();
+            }
+
+            updateUI() {
+                const statusBar = document.getElementById('statusBar');
+                const downloadsLeft = document.getElementById('downloadsLeft');
+
+                if (this.user.isPremium) {
+                    statusBar.classList.add('premium');
+                    statusBar.innerHTML = `
+                        <div class="premium-badge">
+                            <i class="fas fa-crown"></i>
+                            <span>Premium Active</span>
+                        </div>
+                    `;
+                } else {
+                    statusBar.classList.remove('premium');
+                    const remaining = 5 - this.user.downloadsToday;
+                    downloadsLeft.innerHTML = `
+                        <i class="fas fa-download"></i>
+                        <span>${remaining} downloads left</span>
+                    `;
+                }
+            }
+        }
+
+        // Voucher System
+        class VoucherManager {
+            constructor() {
+                this.vouchers = JSON.parse(localStorage.getItem('ytd_vouchers') || '{}');
+            }
+
+            generateVoucher(prefix, type, count = 1) {
+                const vouchers = [];
+                for (let i = 0; i < count; i++) {
+                    const code = `${prefix}-${this.generateRandomString(8)}`;
+                    this.vouchers[code] = {
+                        type: type,
+                        used: false,
+                        createdAt: new Date().toISOString()
+                    };
+                    vouchers.push(code);
+                }
+                this.saveVouchers();
+                return vouchers;
+            }
+
+            generateRandomString(length) {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let result = '';
+                for (let i = 0; i < length; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result;
+            }
+
+            redeemVoucher(code) {
+                const voucher = this.vouchers[code.toUpperCase()];
+                if (!voucher) {
+                    throw new Error('Invalid voucher code');
+                }
+                if (voucher.used) {
+                    throw new Error('Voucher already used');
+                }
+
+                voucher.used = true;
+                voucher.usedAt = new Date().toISOString();
+                this.saveVouchers();
+                
+                return voucher.type;
+            }
+
+            saveVouchers() {
+                localStorage.setItem('ytd_vouchers', JSON.stringify(this.vouchers));
+            }
+        }
+
+        // YouTube API Simulation
+        class YouTubeAPI {
+            constructor() {
+                this.mockVideos = [
+                    {
+                        id: 'dQw4w9WgXcQ',
+                        title: 'Rick Astley - Never Gonna Give You Up (Official Video)',
+                        author: 'Rick Astley',
+                        duration: '3:33',
+                        thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+                        views: '1.4B views'
+                    },
+                    {
+                        id: 'kJQP7kiw5Fk',
+                        title: 'Luis Fonsi - Despacito ft. Daddy Yankee',
+                        author: 'Luis Fonsi',
+                        duration: '4:42',
+                        thumbnail: 'https://img.youtube.com/vi/kJQP7kiw5Fk/maxresdefault.jpg',
+                        views: '8.2B views'
+                    },
+                    {
+                        id: 'fJ9rUzIMcZQ',
+                        title: 'Queen – Bohemian Rhapsody (Official Video Remastered)',
+                        author: 'Queen Official',
+                        duration: '5:55',
+                        thumbnail: 'https://img.youtube.com/vi/fJ9rUzIMcZQ/maxresdefault.jpg',
+                        views: '1.9B views'
+                    },
+                    {
+                        id: 'JGwWNGJdvx8',
+                        title: 'Ed Sheeran - Shape of You (Official Video)',
+                        author: 'Ed Sheeran',
+                        duration: '3:53',
+                        thumbnail: 'https://img.youtube.com/vi/JGwWNGJdvx8/maxresdefault.jpg',
+                        views: '6.1B views'
+                    },
+                    {
+                        id: 'pRpeEdMmmQ0',
+                        title: 'Shakira - Waka Waka (This Time for Africa)',
+                        author: 'Shakira',
+                        duration: '3:31',
+                        thumbnail: 'https://img.youtube.com/vi/pRpeEdMmmQ0/maxresdefault.jpg',
+                        views: '3.4B views'
+                    }
+                ];
+            }
+
+            async searchVideos(query) {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                if (!query.trim()) {
+                    return this.mockVideos;
+                }
+
+                // Simple search simulation
+                return this.mockVideos.filter(video => 
+                    video.title.toLowerCase().includes(query.toLowerCase()) ||
+                    video.author.toLowerCase().includes(query.toLowerCase())
+                );
+            }
+
+            async downloadVideo(videoId, format) {
+                // Simulate download process
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                const video = this.mockVideos.find(v => v.id === videoId);
+                if (!video) {
+                    throw new Error('Video not found');
+                }
+
+                // Create a mock download
+                const blob = new Blob(['Mock file content'], { type: format === 'mp3' ? 'audio/mpeg' : 'video/mp4' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${video.title}.${format}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                return true;
+            }
+        }
+
+        // Initialize managers
+        const userManager = new UserManager();
+        const voucherManager = new VoucherManager();
+        const youtubeAPI = new YouTubeAPI();
+
+        // Theme Management
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('ytd_theme') || 'dark';
+            if (savedTheme === 'light') {
+                body.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+                localStorage.setItem('ytd_theme', 'dark');
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+                localStorage.setItem('ytd_theme', 'light');
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const videosGrid = document.getElementById('videosGrid');
+        const resultsCount = document.getElementById('resultsCount');
+
+        async function performSearch() {
+            const query = searchInput.value.trim();
+            
+            loading.style.display = 'block';
+            errorMessage.style.display = 'none';
+            resultsContainer.style.display = 'none';
+
+            try {
+                const videos = await youtubeAPI.searchVideos(query);
+                displayResults(videos);
+            } catch (error) {
+                showError('Failed to search videos. Please try again.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function displayResults(videos) {
+            videosGrid.innerHTML = '';
+            resultsCount.textContent = `${videos.length} videos found`;
+
+            videos.forEach(video => {
+                const videoCard = createVideoCard(video);
+                videosGrid.appendChild(videoCard);
+            });
+
+            resultsContainer.style.display = 'block';
+        }
+
+        function createVideoCard(video) {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            
+            const canDownload = userManager.canDownload();
+            const downloadDisabled = canDownload ? '' : 'disabled';
+            
+            card.innerHTML = `
+                <div class="video-thumbnail">
+                    <img src="${video.thumbnail}" alt="${video.title}" loading="lazy">
+                    <div class="video-duration">${video.duration}</div>
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">${video.title}</h3>
+                    <div class="video-meta">
+                        <div class="video-author">
+                            <i class="fas fa-user"></i>
+                            <span>${video.author}</span>
+                        </div>
+                        <div class="video-views">${video.views}</div>
+                    </div>
+                    <div class="download-buttons">
+                        <button class="download-btn download-mp3" ${downloadDisabled} onclick="downloadVideo('${video.id}', 'mp3')">
+                            <i class="fas fa-music"></i> MP3
+                        </button>
+                        <button class="download-btn download-mp4" ${downloadDisabled} onclick="downloadVideo('${video.id}', 'mp4')">
+                            <i class="fas fa-video"></i> MP4
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        async function downloadVideo(videoId, format) {
+            if (!userManager.canDownload()) {
+                showError('Download limit reached. Upgrade to premium for unlimited downloads.');
+                return;
+            }
+
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
+            button.disabled = true;
+
+            try {
+                await youtubeAPI.downloadVideo(videoId, format);
+                userManager.recordDownload();
+                showSuccess(`${format.toUpperCase()} download started successfully!`);
+                
+                // Refresh the page to update download buttons
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            } catch (error) {
+                showError('Download failed. Please try again.');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        }
+
+        // Event listeners
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Voucher redemption
+        document.getElementById('redeemBtn').addEventListener('click', () => {
+            const code = document.getElementById('voucherCode').value.trim();
+            if (!code) {
+                showError('Please enter a voucher code');
+                return;
+            }
+
+            try {
+                const type = voucherManager.redeemVoucher(code);
+                userManager.activatePremium(type);
+                showSuccess('Voucher redeemed successfully! Premium features activated.');
+                document.getElementById('voucherCode').value = '';
+            } catch (error) {
+                showError(error.message);
+            }
+        });
+
+        // Admin panel
+        let adminClicks = 0;
+        document.getElementById('adminToggle').addEventListener('click', () => {
+            adminClicks++;
+            if (adminClicks >= 5) {
+                document.getElementById('adminPanel').style.display = 'block';
+                adminClicks = 0;
+            }
+        });
+
+        document.getElementById('generateVouchers').addEventListener('click', () => {
+            const prefix = document.getElementById('voucherPrefix').value || 'ELITE';
+            const type = document.getElementById('voucherType').value;
+            const count = parseInt(document.getElementById('voucherCount').value) || 1;
+
+            const vouchers = voucherManager.generateVoucher(prefix, type, count);
+            displayGeneratedVouchers(vouchers, type);
+        });
+
+        function displayGeneratedVouchers(vouchers, type) {
+            const container = document.getElementById('generatedVouchers');
+            vouchers.forEach(code => {
+                const item = document.createElement('div');
+                item.className = 'voucher-item';
+                item.innerHTML = `
+                    <span>${code} (${type})</span>
+                    <button class="copy-btn" onclick="copyToClipboard('${code}')">Copy</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showSuccess('Voucher code copied to clipboard!');
+            });
+        }
+
+        // Payment modal
+        function openPaymentModal(plan) {
+            const modal = document.getElementById('paymentModal');
+            const amountElement = document.getElementById('paymentAmount');
+            
+            let amount = '$1 USD';
+            if (plan === '3day') amount = '$2 USD';
+            
+            amountElement.textContent = `Amount: ${amount}`;
+            modal.style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function confirmPayment() {
+            showSuccess('Payment confirmation received! Premium features will be activated shortly.');
+            closePaymentModal();
+        }
+
+        // Utility functions
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            document.getElementById('errorText').textContent = message;
+            errorElement.style.display = 'block';
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successElement = document.getElementById('successMessage');
+            document.getElementById('successText').textContent = message;
+            successElement.style.display = 'block';
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            
+            // Auto-search popular videos on load
+            setTimeout(() => {
+                performSearch();
+            }, 1000);
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('paymentModal');
+            if (e.target === modal) {
+                closePaymentModal();
+            }
+        });
+    </script>
+</body>
+</html>
